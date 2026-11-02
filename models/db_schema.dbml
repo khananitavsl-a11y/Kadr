@@ -1,0 +1,191 @@
+Table users {
+  id uuid [pk]
+  phone varchar(13) [unique, not null]
+  role varchar(10) [not null]
+  name varchar(80) [not null]
+  telegram_chat_id bigint [null]
+  created_at timestamptz [not null]
+}
+
+Table creator_profiles {
+  id uuid [pk]
+  user_id uuid [unique, not null]
+  niche varchar(40) [not null]
+  languages varchar(20) [not null]
+  districts text [not null]
+  tax_status varchar(15) [not null]
+  inn varchar(9) [null]
+  moderation_status varchar(15) [not null]
+  rating numeric [not null]
+  orders_done int [not null]
+}
+
+Table portfolio_videos {
+  id uuid [pk]
+  creator_id uuid [not null]
+  url text [not null]
+  duration_sec int [not null]
+  size_mb int [not null]
+}
+
+Table packages {
+  id uuid [pk]
+  creator_id uuid [not null]
+  title varchar(60) [not null]
+  videos smallint [not null]
+  price bigint [not null]
+  days smallint [not null]
+  revision_rounds smallint [not null]
+  is_active boolean [not null]
+}
+
+Table brands {
+  id uuid [pk]
+  smm_user_id uuid [not null]
+  name varchar(80) [not null]
+  instagram varchar(60) [not null]
+}
+
+Table briefs {
+  id uuid [pk]
+  business_id uuid [not null]
+  brand_id uuid [null]
+  format varchar(30) [not null]
+  videos smallint [not null]
+  address text [not null]
+  shoot_date date [not null]
+  due_date date [not null]
+  budget bigint [not null]
+  language varchar(10) [not null]
+  status varchar(15) [not null]
+}
+
+Table responses {
+  id uuid [pk]
+  brief_id uuid [not null]
+  creator_id uuid [not null]
+  price bigint [not null]
+  days smallint [not null]
+  status varchar(10) [not null]
+}
+
+Table orders {
+  id uuid [pk]
+  brief_id uuid [unique, not null]
+  creator_id uuid [not null]
+  status varchar(20) [not null]
+  revision_rounds smallint [not null]
+  rounds_used smallint [not null]
+  subtotal bigint [not null]
+  commission bigint [not null]
+  total bigint [not null]
+  confirmed_at timestamptz [null]
+  accepted_at timestamptz [null]
+}
+
+Table order_items {
+  id uuid [pk]
+  order_id uuid [not null]
+  package_id uuid [not null]
+  quantity smallint [not null]
+  unit_price bigint [not null]
+  line_total bigint [not null]
+}
+
+Table payments {
+  id uuid [pk]
+  order_id uuid [not null]
+  provider varchar(10) [not null]
+  external_id varchar(64) [unique, not null]
+  amount bigint [not null]
+  status varchar(12) [not null]
+  held_at timestamptz [null]
+}
+
+Table deliveries {
+  id uuid [pk]
+  order_id uuid [not null]
+  round smallint [not null]
+  video_url text [not null]
+  watermarked boolean [not null]
+  submitted_at timestamptz [not null]
+}
+
+Table revision_requests {
+  id uuid [pk]
+  order_id uuid [not null]
+  round smallint [not null]
+  comment text [not null]
+  created_at timestamptz [not null]
+}
+
+Table disputes {
+  id uuid [pk]
+  order_id uuid [unique, not null]
+  opened_by uuid [not null]
+  reason text [not null]
+  status varchar(12) [not null]
+  decision varchar(15) [null]
+  refund_amount bigint [null]
+  resolved_at timestamptz [null]
+}
+
+Table payouts {
+  id uuid [pk]
+  order_id uuid [unique, not null]
+  creator_id uuid [not null]
+  amount bigint [not null]
+  status varchar(12) [not null]
+  paid_at timestamptz [null]
+}
+
+Table reviews {
+  id uuid [pk]
+  order_id uuid [unique, not null]
+  rating smallint [not null]
+  text text [not null]
+  created_at timestamptz [not null]
+}
+
+Table messages {
+  id uuid [pk]
+  order_id uuid [not null]
+  sender_id uuid [not null]
+  text text [not null]
+  photo_url text [null]
+  created_at timestamptz [not null]
+}
+
+Table notifications {
+  id uuid [pk]
+  user_id uuid [not null]
+  order_id uuid [null]
+  channel varchar(10) [not null]
+  text text [not null]
+  sent_at timestamptz [not null]
+}
+
+Ref: creator_profiles.user_id > users.id
+Ref: portfolio_videos.creator_id > creator_profiles.id
+Ref: packages.creator_id > creator_profiles.id
+Ref: brands.smm_user_id > users.id
+Ref: briefs.business_id > users.id
+Ref: briefs.brand_id > brands.id
+Ref: responses.brief_id > briefs.id
+Ref: responses.creator_id > creator_profiles.id
+Ref: orders.brief_id > briefs.id
+Ref: orders.creator_id > creator_profiles.id
+Ref: order_items.order_id > orders.id
+Ref: order_items.package_id > packages.id
+Ref: payments.order_id > orders.id
+Ref: deliveries.order_id > orders.id
+Ref: revision_requests.order_id > orders.id
+Ref: disputes.order_id > orders.id
+Ref: disputes.opened_by > users.id
+Ref: payouts.order_id > orders.id
+Ref: payouts.creator_id > creator_profiles.id
+Ref: reviews.order_id > orders.id
+Ref: messages.order_id > orders.id
+Ref: messages.sender_id > users.id
+Ref: notifications.user_id > users.id
+Ref: notifications.order_id > orders.id
