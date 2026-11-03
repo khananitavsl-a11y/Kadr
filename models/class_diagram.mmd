@@ -1,0 +1,126 @@
+classDiagram
+  direction TB
+  class User {
+    +id: UUID
+    +phone: String
+    +role: Role
+    +name: String
+    +createdAt: DateTime
+  }
+  class CreatorProfile {
+    +niche: String
+    +languages: String[]
+    +districts: String[]
+    +taxStatus: TaxStatus
+    +inn: String
+    +moderation: ModerationStatus
+    +rating: Decimal
+  }
+  class PortfolioVideo {
+    +url: String
+    +durationSec: Int
+    +sizeMb: Int
+  }
+  class Package {
+    +title: String
+    +videos: Int
+    +price: Money
+    +days: Int
+    +revisionRounds: Int
+    +active: Bool
+  }
+  class Brand {
+    +name: String
+    +instagram: String
+  }
+  class Brief {
+    +format: String
+    +videos: Int
+    +address: String
+    +shootDate: Date
+    +dueDate: Date
+    +budget: Money
+    +language: String
+    +status: BriefStatus
+  }
+  class Response {
+    +price: Money
+    +days: Int
+    +status: ResponseStatus
+  }
+  class Order {
+    +status: OrderStatus
+    +revisionRounds: Int
+    +roundsUsed: Int
+    +subtotal: Money
+    +commission: Money
+    +total: Money
+    +confirmedAt: DateTime
+  }
+  class OrderItem {
+    +quantity: Int
+    +unitPrice: Money
+    +lineTotal: Money
+  }
+  class Payment {
+    +provider: Provider
+    +externalId: String
+    +amount: Money
+    +status: PaymentStatus
+    +heldAt: DateTime
+  }
+  class Delivery {
+    +videoUrl: String
+    +watermarked: Bool
+    +round: Int
+    +submittedAt: DateTime
+  }
+  class RevisionRequest {
+    +comment: String
+    +round: Int
+  }
+  class Dispute {
+    +reason: String
+    +status: DisputeStatus
+    +decision: Decision
+    +refundAmount: Money
+  }
+  class Payout {
+    +amount: Money
+    +status: PayoutStatus
+    +paidAt: DateTime
+  }
+  class Review {
+    +rating: Int
+    +text: String
+  }
+  class Message {
+    +text: String
+    +photoUrl: String
+    +createdAt: DateTime
+  }
+  class Notification {
+    +channel: Channel
+    +text: String
+    +sentAt: DateTime
+  }
+  User "1" -- "0..1" CreatorProfile : креатор
+  CreatorProfile "1" *-- "3..20" PortfolioVideo
+  CreatorProfile "1" *-- "1..5" Package
+  User "1" -- "0..10" Brand : SMM ведёт
+  User "1" -- "0..*" Brief : бизнес создаёт
+  Brand "0..1" -- "0..*" Brief : от имени
+  Brief "1" -- "0..*" Response
+  CreatorProfile "1" -- "0..*" Response : откликается
+  Brief "1" -- "0..1" Order
+  Order "1" *-- "1..*" OrderItem
+  Package "1" -- "0..*" OrderItem
+  Order "1" -- "0..*" Payment
+  Order "1" -- "0..*" Delivery
+  Order "1" -- "0..*" RevisionRequest
+  Order "1" -- "0..1" Dispute
+  Order "1" -- "0..1" Payout
+  Order "1" -- "0..1" Review
+  Order "1" -- "0..*" Message : чат
+  User "1" -- "0..*" Message : пишет
+  User "1" -- "0..*" Notification
