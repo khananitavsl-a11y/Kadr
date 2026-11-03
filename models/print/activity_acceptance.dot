@@ -1,0 +1,27 @@
+digraph A {
+graph [rankdir=TB, nodesep=0.25, ranksep=0.32, fontname="Liberation Sans", bgcolor="white", pad=0.15];
+node [fontname="Liberation Sans", fontsize=22, shape=box, style="rounded,filled", penwidth=2, color="#333333", margin="0.14,0.08"];
+edge [fontname="Liberation Sans", fontsize=20, penwidth=2.2, color="#444444", arrowsize=1.1];
+start [shape=circle, label="", width=0.35, style=filled, fillcolor="#222222"];
+b1 [label="Показать ролики\nс водяным знаком,\nтаймер 72 ч", fillcolor="#E6ECF7"];
+d1 [shape=diamond, style=filled, fillcolor="#FFE08A", label="Решение\nбизнеса", fontsize=21, margin="0.02,0.02"];
+r1 [label="Записать\nкомментарий,\nраунд +1", fillcolor="#DCE4FB"];
+r2 [label="Креатор\nвносит правки", fillcolor="#DCE4FB"];
+s1 [label="Статус «Спор»,\nденьги\nудержаны", fillcolor="#F6C1BC"];
+s2 [label="Модератор\nизучает бриф,\nролики и чат", fillcolor="#F6C1BC"];
+d2 [shape=diamond, style=filled, fillcolor="#FFE08A", label="Решение\nмодератора", fontsize=21, margin="0.02,0.02"];
+ref [label="Партнёр\nвозвращает\nденьги бизнесу", fillcolor="#F6C1BC"];
+auto [label="Автоприёмка", fillcolor="#FFE9B0"];
+acc [label="Заказ «Принят»", fillcolor="#BFE5C8"];
+pay [label="Партнёр переводит\nденьги креатору,\nбизнесу — отзыв", fillcolor="#BFE5C8"];
+e1 [shape=doublecircle, label="", width=0.3, style=filled, fillcolor="#222222"];
+e2 [shape=doublecircle, label="", width=0.3, style=filled, fillcolor="#222222"];
+start->b1->d1;
+d1->r1 [label=<<FONT COLOR="#2B4FB0"> правки<BR/> (раунды есть)</FONT>>];
+d1->s1 [label=" спор", fontcolor="#B03A2E"];
+d1->auto [label=" молчит 72 ч", fontcolor="#9A6B00"];
+d1->acc [label=" принимает", fontcolor="#1E7B45"];
+r1->r2; c1 [shape=circle, label="1", fontsize=22, width=0.45, fixedsize=true, style=filled, fillcolor="#DCE4FB"]; c2 [shape=circle, label="1", fontsize=22, width=0.45, fixedsize=true, style=filled, fillcolor="#DCE4FB"]; r2->c1 [label=<<FONT POINT-SIZE="19"> новый<BR/> раунд</FONT>>]; {rank=same; start; c2;} c2->b1;
+s1->s2->d2; d2->ref [label=" вернуть"]; d2->acc [label=" выплатить"];
+auto->acc; acc->pay->e1; ref->e2;
+}

@@ -1,0 +1,26 @@
+digraph P {
+graph [rankdir=TB, nodesep=0.25, ranksep=0.32, fontname="Liberation Sans", bgcolor="white", pad=0.15];
+node [fontname="Liberation Sans", fontsize=22, shape=box, style="rounded,filled", penwidth=2, color="#333333", margin="0.14,0.08"];
+edge [fontname="Liberation Sans", fontsize=20, penwidth=2.2, color="#444444", arrowsize=1.1];
+start [shape=circle, label="", width=0.35, style=filled, fillcolor="#222222"];
+a1 [label="Показать расчёт:\nцена + 15% = итог", fillcolor="#E6ECF7"];
+a2 [label="Бизнес выбирает\nPayme или Click", fillcolor="#E6ECF7"];
+a3 [label="Создать платёж\nс удержанием", fillcolor="#E6ECF7"];
+a4 [label="Бизнес вводит карту\nна странице партнёра", fillcolor="#FFF3C4"];
+d1 [shape=diamond, style=filled, fillcolor="#FFE08A", label="Ответ?", fontsize=21, margin="0.02,0.02"];
+ok [label="«Оплата удержана»,\nкреатор получает\nуведомление", fillcolor="#BFE5C8"];
+err [label="Ошибка:\nденьги не списаны", fillcolor="#F6C1BC"];
+chk [label="Сверить статус\nчерез 15 мин", fillcolor="#FFE9B0"];
+d2 [shape=diamond, style=filled, fillcolor="#FFE08A", label="Найден?", fontsize=21, margin="0.02,0.02"];
+d3 [shape=diamond, style=filled, fillcolor="#FFE08A", label="Повторить?", fontsize=21, margin="0.02,0.02"];
+e1 [shape=doublecircle, label="", width=0.3, style=filled, fillcolor="#222222"];
+e2 [shape=doublecircle, label="", width=0.3, style=filled, fillcolor="#222222"];
+start->a1->a2->a3->a4->d1;
+d1->ok [label=" успешно", fontcolor="#1E7B45"];
+d1->chk [label=" нет ответа", fontcolor="#9A6B00"];
+d1->err [label=" отказ", fontcolor="#B03A2E"];
+chk->d2; d2->ok [label=" да"]; d2->err [label=" нет"];
+err->d3; d3->a2 [label=" да", constraint=false]; d3->e2 [label=<<FONT POINT-SIZE="19"> нет: заказ<BR/> «Ожидает оплаты»</FONT>>];
+ok->e1;
+{rank=same; ok; err;}
+}

@@ -1,0 +1,74 @@
+<html><head><meta charset="utf-8"><style>*{box-sizing:border-box;margin:0}
+body{width:1180px;padding:12px;font-family:'Liberation Sans',Arial,sans-serif;font-size:21px;color:#111;background:#fff;position:relative}
+.row{display:flex;gap:10px}
+.band{margin-bottom:6px}
+.hd{display:inline-block;color:#fff;font-weight:700;font-size:20px;padding:4px 12px;border-radius:8px 8px 0 0}
+.hd small{font-weight:400;font-size:18px}
+.box{border:3px solid;border-radius:0 12px 12px 12px;padding:8px}
+.card{flex:1;border:2px solid #333;border-radius:10px;background:#fff;padding:6px 9px;line-height:1.18}
+.card b{display:block;font-size:22px;margin-bottom:2px}
+.card span{font-size:20px;color:#222}
+.users{display:flex;gap:10px;align-items:center;font-size:19px;color:#333}
+.u{border-radius:22px;padding:5px 14px;font-weight:700;font-size:20px;border:2px solid #333}
+.flow{font-size:19px;color:#444;height:30px;display:flex;align-items:center;gap:8px;padding-left:10px}
+.flow i{font-style:normal;font-size:26px;font-weight:700}
+.uz{border:3px dashed #2E8B57;border-radius:16px;padding:40px 10px 10px;position:relative}
+.uz .lbl{position:absolute;top:-2px;left:16px;background:#2E8B57;color:#fff;font-weight:700;font-size:20px;padding:4px 12px;border-radius:0 0 8px 8px}
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.m{border:2px solid #333;border-radius:10px;padding:5px 8px;line-height:1.16;min-height:96px}
+.m b{display:block;font-size:21px}
+.m span{font-size:19px}
+.bgt{margin-top:8px;border:2px dashed #8a6d00;border-radius:10px;background:#FFF6D6;padding:5px 10px;font-size:19px}
+.ext{width:240px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+.e{border:2px solid #333;border-radius:10px;padding:7px 9px;line-height:1.16}
+.e b{display:block;font-size:21px}.e span{font-size:18px}
+.money{display:inline-block;background:#1D4ED8;color:#fff;border-radius:6px;padding:1px 6px;font-size:17px;font-weight:700;margin-top:3px}
+svg{position:absolute;left:0;top:0;pointer-events:none}</style></head><body>
+<div class="users">Пользователи: <span class="u" style="background:#F2C98A">Владелец бизнеса</span><span class="u" style="background:#A8D5A2">Креатор</span><span class="u" style="background:#F2C98A">SMM-менеджер</span><span class="u" style="background:#F2A0A0">Модератор</span></div>
+<div class="flow"><i>↓</i></div>
+<div style="display:flex;gap:70px;align-items:flex-start">
+<div style="flex:1">
+ <div class="band"><span class="hd" style="background:#334155">1. Клиенты <small>— что видит пользователь</small></span><div class="box row" style="border-color:#334155;background:#F4F6FA">
+  <div class="card"><b>Сайт для телефона</b><span>PWA, узбекский и русский</span></div><div class="card"><b>Панель модератора</b><span>профили и споры</span></div><div class="card"><b>Telegram-бот</b><span>статусы заказа</span></div></div></div>
+ <div class="flow"><i>↓</i> HTTPS (TLS) · JSON</div>
+ <div class="uz"><div class="lbl">Серверы в Ташкенте — данные не покидают Узбекистан (О-1)</div>
+  <div class="band"><span class="hd" style="background:#6D28D9">2. Шлюз <small>— единая точка входа</small></span><div class="box row" style="border-color:#6D28D9;background:#F6F1FE">
+   <div class="card"><b>Nginx + API</b><span>HTTPS, лимит запросов</span></div><div class="card"><b>Авторизация</b><span>SMS-код, JWT, блок после 5 ошибок</span></div><div class="card"><b>Приём уведомлений</b><span>Payme / Click, проверка подписи</span></div></div></div>
+  <div class="flow"><i>↓</i> вызовы модулей внутри одного приложения</div>
+  <div class="band"><span class="hd" style="background:#C2410C">3. Приложение Kadr <small>— модульный монолит: 8 модулей, у каждой таблицы один владелец</small></span><div class="box" id="app" style="border-color:#C2410C;background:#FFF7F2">
+   <div class="mods">
+    <div class="m" style="background:#FDF3E3"><b>М1 Пользователи</b><span>роли, профиль, вход по SMS</span></div>
+    <div class="m" style="background:#EEF7EC"><b>М2 Каталог</b><span>портфолио, пакеты, фильтры</span></div>
+    <div class="m" style="background:#FFE3D6;border:3px solid #C2410C"><b>М3 Заказы</b><span>бриф, отклики, условия, чат</span></div>
+    <div class="m" style="background:#E3E9FD;border:3px solid #1D4ED8"><b>М4 Платежи</b><span>удержание, сверка, выплата</span><br><span class="money">деньги — только М4</span></div>
+    <div class="m" style="background:#F6EEFB"><b>М5 Приёмка</b><span>ролики, водяной знак, правки</span></div>
+    <div class="m" style="background:#FCECEC"><b>М6 Споры</b><span>модерация профилей, решения</span></div>
+    <div class="m" style="background:#EAF6F7"><b>М7 Отзывы</b><span>оценки, рейтинг креатора</span></div>
+    <div class="m" style="background:#F3F3F3"><b>М8 Уведомления</b><span>события → Telegram / SMS</span></div>
+   </div>
+   <div class="bgt"><b>Фоновые задачи:</b> автоприёмка через 72 ч · сверка платежей каждые 15 мин</div>
+  </div></div>
+  <div class="flow"><i>↓</i> SQL · файлы · очередь задач</div>
+  <div class="band" style="margin-bottom:0"><span class="hd" style="background:#3F7D1F">4. Данные <small>— хранятся у нас</small></span><div class="box row" style="border-color:#3F7D1F;background:#F1F8EE">
+   <div class="card"><b>PostgreSQL</b><span>17 таблиц</span></div><div class="card"><b>Видео (S3)</b><span>ролики до 200 МБ</span></div><div class="card"><b>Redis</b><span>очередь, кэш каталога</span></div><div class="card"><b>Резервные копии</b><span>раз в 15 мин; подъём ≤ 4 ч</span></div></div></div>
+ </div>
+</div>
+<div class="ext" id="ext"><span class="hd" style="background:#475569;border-radius:8px;position:relative;top:-6px">5. Внешние сервисы<br><small>не наши, но от них зависим</small></span>
+ <div class="e" id="x1" style="background:#FFF3C4"><b>Payme / Click</b><span>удержание, выплата, возврат; карта вводится только здесь</span></div>
+ <div class="e" id="x2" style="background:#F3F3F3"><b>SMS-шлюз</b><span>коды входа</span></div>
+ <div class="e" id="x3" style="background:#E8F1FB"><b>Telegram Bot API</b><span>уведомления о статусах</span></div>
+ <div class="e" id="x4" style="background:#FCECEC;border-style:dashed"><b>Налоговый комитет</b><span>статус самозанятого; в версии 1 проверяет модератор</span></div>
+</div></div>
+<svg id="sv"></svg>
+<script>
+const sv=document.getElementById('sv');const W=document.body.scrollWidth,H=document.body.scrollHeight;sv.setAttribute('width',W);sv.setAttribute('height',H);
+sv.innerHTML='<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="12" refX="13" refY="6" orient="auto-start-reverse"><path d="M0,0 L14,6 L0,12 z" fill="#333"/></marker></defs>';
+const appEl=document.getElementById('app');const ext=document.getElementById('ext');const x1el=document.getElementById('x1');
+ext.style.marginTop=(appEl.getBoundingClientRect().top - x1el.getBoundingClientRect().top + 10)+'px';
+const W2=document.body.scrollWidth,H2=document.body.scrollHeight;sv.setAttribute('width',W2);sv.setAttribute('height',H2);
+const app=appEl.getBoundingClientRect();
+const L=[['x1','М4 ↔','#1D4ED8',true],['x2','М1 →','#333',false],['x3','М8 →','#333',false],['x4','М6 ⇢','#B03A2E',false]];
+L.forEach(([id,lab,c,both],i)=>{const r=document.getElementById(id).getBoundingClientRect();const y=r.top+r.height/2;const x1=app.right+2,x2=r.left-2;const ya=y;
+ const d=`M${x1},${ya} L${x2-26},${ya} L${x2-26},${y} L${x2},${y}`;
+ sv.innerHTML+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="3" ${id=='x4'?'stroke-dasharray="8 6"':''} marker-end="url(#ar)" ${both?'marker-start="url(#ar)"':''}/>`+`<text x="${x1+8}" y="${ya-9}" font-size="20" font-weight="700" fill="${c}" stroke="white" stroke-width="5" paint-order="stroke">${lab}</text>`;});
+</script></body></html>
